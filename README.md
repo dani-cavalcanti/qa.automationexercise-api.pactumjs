@@ -1,0 +1,1 @@
+# qa.automationexercise-api.pactumjs
