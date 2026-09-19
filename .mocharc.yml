@@ -1,0 +1,13 @@
+require:
+  - test/setup.js
+spec:
+  - "test/**/*.spec.js"
+timeout: 20000
+reporter: mochawesome
+reporter-option:
+  - "reportDir=reports/mochawesome"
+  - "reportFilename=results"
+  - "overwrite=true"
+  - "html=false"
+  - "json=true"
+recursive: true

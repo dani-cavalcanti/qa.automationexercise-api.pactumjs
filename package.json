@@ -1,0 +1,47 @@
+{
+  "name": "qa.serverest-api.pactumjs",
+  "version": "1.0.0",
+  "description": "Suite de testes de API (funcionais e de contrato) para o ServeRest, construída com PactumJS, Mocha e Joi.",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "mocha",
+    "test:login": "mocha \"test/login/**/*.spec.js\"",
+    "test:usuarios": "mocha \"test/usuarios/**/*.spec.js\"",
+    "test:produtos": "mocha \"test/produtos/**/*.spec.js\"",
+    "test:report": "npm test && npm run report:generate",
+    "report:generate": "marge reports/mochawesome/results.json --reportDir reports/html --reportFilename index --inline",
+    "report:open": "open reports/html/index.html",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"**/*.js\""
+  },
+  "keywords": [
+    "api-testing",
+    "pactum",
+    "joi",
+    "serverest",
+    "mocha"
+  ],
+  "dependencies": {
+    "@faker-js/faker": "^9.6.0",
+    "dotenv": "^16.4.5",
+    "http-status-codes": "^2.3.0",
+    "joi": "^17.13.3",
+    "pactum": "^3.7.1",
+    "pactum-matchers": "^1.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-mocha": "^10.5.0",
+    "mocha": "^10.8.2",
+    "mochawesome": "^7.1.3",
+    "mochawesome-report-generator": "^6.2.0",
+    "prettier": "^3.3.3"
+  }
+}

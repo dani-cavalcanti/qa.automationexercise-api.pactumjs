@@ -1,0 +1,50 @@
+name: API Test Suite
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+  # Execução agendada para monitorar a saúde da API externa (ServeRest)
+  # independentemente de haver commits novos no repositório.
+  schedule:
+    - cron: '0 9 * * 1-5'
+
+jobs:
+  test:
+    name: Lint, testes de API e relatório
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Executar testes de API (funcionais + contrato)
+        env:
+          BASE_URL: https://serverest.dev
+        run: npm test
+
+      - name: Gerar relatório HTML (Mochawesome)
+        if: always()
+        run: npm run report:generate
+
+      - name: Publicar relatório como artefato
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mochawesome-report
+          path: reports/html
+          retention-days: 15
