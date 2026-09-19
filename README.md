@@ -96,9 +96,23 @@ Joi foi integrado sem violar os padrões do framework) está em
 
 ## Instalação
 
+**1. Clone o repositório**
+
+Copie o projeto do [GitHub](https://github.com/dani-cavalcanti/qa.automationexercise-api.pactumjs) para a sua máquina:
+
 ```bash
-git clone <url-do-repositorio>
+git clone https://github.com/dani-cavalcanti/qa.automationexercise-api.pactumjs.git
+```
+
+**2. Acesse a pasta do projeto**
+
+```bash
 cd qa.automationexercise-api.pactumjs
+```
+
+**3. Instale as dependências**
+
+```bash
 npm install
 ```
 
