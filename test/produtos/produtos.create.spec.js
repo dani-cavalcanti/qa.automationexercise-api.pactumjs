@@ -22,6 +22,8 @@ const { criarAdminAutenticado } = require('../../src/support/authHelper');
  *  - Análise de valor limite para os campos numéricos `preco` (> 0, inteiro)
  *    e `quantidade` (>= 0, inteiro);
  *  - Particionamento de equivalência para os campos obrigatórios;
+ *  - Suposição de Erro (Error Guessing) para tipos de dado inválidos
+ *    (ex.: decimal onde a API exige inteiro);
  *  - Teste de contrato (Joi) do payload de sucesso.
  *
  * Observação de escopo: não há endpoint DELETE /produtos no desafio, então
@@ -187,17 +189,6 @@ describe('POST /produtos - cadastro de produto', () => {
         .expectStatus(StatusCodes.BAD_REQUEST)
         .toss();
     });
-
-    it('não deve aceitar valores não inteiros (preco = 10.5)', async () => {
-      // Arrange
-      const payload = produtoFactory.build({ preco: 10.5 });
-
-      // Act & Assert
-      await produtosApi
-        .criarProduto(payload, admin.authorizationHeader)
-        .expectStatus(StatusCodes.BAD_REQUEST)
-        .toss();
-    });
   });
 
   describe('análise de valor limite: campo "quantidade" (número inteiro >= 0)', () => {
@@ -215,6 +206,22 @@ describe('POST /produtos - cadastro de produto', () => {
     it('não deve aceitar valores negativos (quantidade = -1)', async () => {
       // Arrange
       const payload = produtoFactory.build({ quantidade: -1 });
+
+      // Act & Assert
+      await produtosApi
+        .criarProduto(payload, admin.authorizationHeader)
+        .expectStatus(StatusCodes.BAD_REQUEST)
+        .toss();
+    });
+  });
+
+  // Casos que não nascem de uma partição ou de um limite da especificação,
+  // e sim da experiência com falhas comuns de APIs REST (CTFL: Suposição de
+  // Erro / Error Guessing) — ver docs/test-design/03-produtos.md.
+  describe('suposição de erro: tipos de dado inválidos', () => {
+    it('não deve aceitar um valor decimal para "preco" (número inteiro é exigido)', async () => {
+      // Arrange
+      const payload = produtoFactory.build({ preco: 10.5 });
 
       // Act & Assert
       await produtosApi

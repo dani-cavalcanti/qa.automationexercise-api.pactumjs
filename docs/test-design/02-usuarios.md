@@ -64,12 +64,17 @@ Técnica aplicada: **Tabela de Decisão**.
 
 ### Observações
 
-- A regra **R3** é um achado relevante de teste exploratório: como o schema
-  de validação de `DELETE /usuarios/{_id}` (no back-end) exige apenas uma
+- A condição **C1** (formato do `_id`) não veio da especificação do
+  endpoint — ela surgiu de **Suposição de Erro (Error Guessing)**: a
+  experiência de que APIs REST costumam confiar demais no formato de um
+  parâmetro de rota motivou testar um `_id` deliberadamente mal formado. O
+  resultado (regra **R3**) foi um achado relevante: como o schema de
+  validação de `DELETE /usuarios/{_id}` (no back-end) exige apenas uma
   `string` não vazia — sem checagem de formato/tamanho — um `_id` mal
   formado **não** retorna 400/404, e sim 200 com `Nenhum registro
-  excluído`, pois cai na mesma lógica de "não encontrado" de R2. Isso está
-  coberto por um teste dedicado para não regredir silenciosamente caso a
+  excluído`, pois cai na mesma lógica de "não encontrado" de R2. Uma vez
+  identificada, a condição foi formalizada na tabela de decisão acima e
+  coberta por um teste dedicado, para não regredir silenciosamente caso a
   API passe a validar o formato do `_id` no futuro.
 - A regra **R4** foi deixada de fora da automação porque monta uma
   pré-condição (criar um carrinho) usando o recurso `/carrinhos`, que não

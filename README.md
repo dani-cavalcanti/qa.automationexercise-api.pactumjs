@@ -164,13 +164,19 @@ artefato do workflow.
 ## Estratégia e design de testes (CTFL)
 
 Todo o racional de teste — particionamento de equivalência, análise de
-valor limite e tabelas de decisão, com o mapeamento completo entrada →
-partição/regra → status HTTP → teste automatizado — está documentado em:
+valor limite, tabelas de decisão e suposição de erro, com o mapeamento
+completo entrada → partição/regra → status HTTP → teste automatizado — está
+documentado em:
 
-- [`docs/test-strategy.md`](docs/test-strategy.md) — visão geral
+- [`docs/test-strategy.md`](docs/test-strategy.md) — visão geral, incluindo
+  o mapeamento explícito às **quatro categorias de técnicas do CTFL v4.0**
+  (caixa-preta, caixa-branca, baseadas em experiência, colaborativas),
+  justificando também as que não se aplicam a este escopo
 - [`docs/test-design/01-login.md`](docs/test-design/01-login.md)
 - [`docs/test-design/02-usuarios.md`](docs/test-design/02-usuarios.md)
 - [`docs/test-design/03-produtos.md`](docs/test-design/03-produtos.md)
+- [`docs/checklist-aceitacao.md`](docs/checklist-aceitacao.md) — checklist
+  ponto a ponto entre cada requisito do enunciado e o artefato que o atende
 
 ---
 

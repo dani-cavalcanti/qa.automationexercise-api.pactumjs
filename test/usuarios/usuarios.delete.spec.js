@@ -11,8 +11,11 @@ const Messages = require('../../src/constants/messages');
  *
  * Técnicas aplicadas (detalhadas em docs/test-design/02-usuarios.md,
  * incluindo a tabela de decisão completa do endpoint):
- *  - Particionamento de equivalência do parâmetro de rota `_id`: existente
- *    com formato válido / inexistente com formato válido / formato inválido.
+ *  - Tabela de decisão para o parâmetro de rota `_id`: existente com formato
+ *    válido / inexistente com formato válido / formato inválido;
+ *  - Suposição de Erro (Error Guessing) na condição de formato do `_id`,
+ *    que revelou o comportamento não-óbvio de a API responder 200 (em vez
+ *    de 400/404) mesmo para um id claramente mal formado.
  *
  * Observação de escopo: a regra de negócio "não é permitido excluir usuário
  * com carrinho cadastrado" (400) depende do recurso /carrinhos, que está
